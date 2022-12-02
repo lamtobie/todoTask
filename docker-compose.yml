@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  todotask:
+    image: ${DOCKER_REGISTRY-}todotask
+    build:
+      context: .
+      dockerfile: Dockerfile

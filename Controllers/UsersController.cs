@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using todoTask.Models;
 using todoTask.BLL;
+using Microsoft.AspNetCore.Authorization;
 
 namespace todoTask.Controllers
 {
@@ -22,7 +23,7 @@ namespace todoTask.Controllers
         }
 
         // GET: api/Users
-        [HttpGet]
+        [HttpGet, Authorize]
         public async Task<IEnumerable<UserDTO>> GetUsers()
         {
             return _userService.GetUsers();
