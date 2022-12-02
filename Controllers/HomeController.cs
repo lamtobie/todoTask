@@ -3,6 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using todoTask.BLL.DTOs;
 
 namespace todoTask.Controllers
 {
@@ -11,13 +12,13 @@ namespace todoTask.Controllers
     public class HomeController : ControllerBase
     {
         [HttpPost]
-        public IActionResult Login(string username, string password)
+        public IActionResult Login(LoginDTO login)
         {
-            if (username == null || password == null)
+            if (login.Username == null || login.Password == null)
             {
                 return BadRequest("Invalid client request");
             }
-            if (username == "lam" && password == "123")
+            if (login.Username == "lam" && login.Password == "123")
             {
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@2410"));
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
