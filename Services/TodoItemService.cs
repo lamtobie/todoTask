@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.EntityFrameworkCore;
+using todoTask.BLL;
 using todoTask.Models;
 
-namespace todoTask.BLL
+namespace todoTask.Services
 {
-    public class TodoItemRepository: ITodoItemRepository
+    public class TodoItemService:ITodoItemService
     {
         TodoContext context = new TodoContext();
         public IEnumerable<TodoItemDTO> GetTodoItems()
@@ -24,7 +23,7 @@ namespace todoTask.BLL
                     temp.UserID = todoItem.UserID;
                     temp.Name = todoItem.Name;
                     temp.IsComplete = todoItem.IsComplete;
-           
+
 
                     TodoItemList.Add(temp);
                 }
@@ -34,28 +33,28 @@ namespace todoTask.BLL
         public async Task<int> CreateTodoItem(TodoItemDTO todoItem)
         {
             TodoItem addTodoItem = new TodoItem();
-            addTodoItem.Id= todoItem.Id;
-            addTodoItem.Name=todoItem.Name;
-            addTodoItem.UserID=todoItem.UserID;
+            addTodoItem.Id = todoItem.Id;
+            addTodoItem.Name = todoItem.Name;
+            addTodoItem.UserID = todoItem.UserID;
             addTodoItem.IsComplete = todoItem.IsComplete;
-           return await context.SaveChangesAsync();
+            return await context.SaveChangesAsync();
         }
         public async Task<TodoItemDTO> GetTodoItem(long id)
         {
-            var todoItem= await context.TodoItems.FindAsync(id);
+            var todoItem = await context.TodoItems.FindAsync(id);
             TodoItemDTO todoItemDTO = new TodoItemDTO();
             todoItemDTO.Id = todoItem.Id;
             todoItemDTO.Name = todoItem.Name;
-            todoItemDTO.UserID= todoItem.UserID;
+            todoItemDTO.UserID = todoItem.UserID;
             todoItemDTO.IsComplete = todoItem.IsComplete;
             return todoItemDTO;
         }
-        public async Task<int> UpdateTodoItem(long id,TodoItemDTO todoItem)
+        public async Task<int> UpdateTodoItem(long id, TodoItemDTO todoItem)
         {
-            TodoItem updateTodoItem=new TodoItem();
+            TodoItem updateTodoItem = new TodoItem();
             updateTodoItem.Id = todoItem.Id;
-            updateTodoItem.Name= todoItem.Name;
-            updateTodoItem.UserID= todoItem.UserID;
+            updateTodoItem.Name = todoItem.Name;
+            updateTodoItem.UserID = todoItem.UserID;
             updateTodoItem.IsComplete = todoItem.IsComplete;
             context.Entry(updateTodoItem).State = EntityState.Modified;
 
@@ -86,7 +85,7 @@ namespace todoTask.BLL
             context.TodoItems.Remove(todoItem);
             return await context.SaveChangesAsync();
         }
-        public async Task<int> AssignTask(long id,long userid)
+        public async Task<int> AssignTask(long id, long userid)
         {
             var todoItem = await context.TodoItems.FindAsync(id);
             if (todoItem == null)

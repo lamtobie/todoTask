@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using todoTask.Models;
 using todoTask.BLL;
 using Microsoft.AspNetCore.Authorization;
+using todoTask.Services;
 
 namespace todoTask.Controllers
 {
@@ -15,11 +16,11 @@ namespace todoTask.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly UserRepository _userService;
+        private readonly UserServices _userService;
 
         public UsersController(TodoContext context)
         {
-            _userService = new UserRepository();
+            _userService = new UserServices();
         }
 
         // GET: api/Users

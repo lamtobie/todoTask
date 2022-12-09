@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using todoTask.BLL;
-
+using todoTask.Services;
 
 namespace todoTask.Controllers
 {
@@ -14,11 +14,11 @@ namespace todoTask.Controllers
     [ApiController]
     public class TodoItemsController : ControllerBase
     {
-        private readonly TodoItemRepository todoItemService;
+        private readonly TodoItemService todoItemService;
 
         public TodoItemsController()
         {
-            todoItemService = new TodoItemRepository(); ;
+            todoItemService = new TodoItemService(); ;
         }
 
         // GET: api/TodoItems

@@ -1,6 +1,4 @@
-﻿using todoTask.BLL;
-
-namespace todoTask.Interface
+﻿namespace todoTask.BLL
 {
     public interface ITodoItemRepository
     {

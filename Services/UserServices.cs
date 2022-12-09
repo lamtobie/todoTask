@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.EntityFrameworkCore;
+using todoTask.BLL;
 using todoTask.Models;
 
-namespace todoTask.BLL
+namespace todoTask.Services
 {
-    public class UserRepository:IUserRepository
+    public class UserServices:IUserService
     {
         TodoContext context = new TodoContext();
         public IEnumerable<UserDTO> GetUsers()
@@ -20,8 +19,8 @@ namespace todoTask.BLL
                 foreach (var user in users)
                 {
                     UserDTO temp = new UserDTO();
-                    temp.Id= user.Id;
-                    temp.Phone= user.Phone;
+                    temp.Id = user.Id;
+                    temp.Phone = user.Phone;
                     temp.Name = user.Name;
                     UserList.Add(temp);
                 }
@@ -31,27 +30,27 @@ namespace todoTask.BLL
         public async Task<int> CreateUser(UserDTO user)
         {
             User addUser = new User();
-            addUser.Id= user.Id;
-            addUser.Name= user.Name;
-            addUser.Phone= user.Phone;
+            addUser.Id = user.Id;
+            addUser.Name = user.Name;
+            addUser.Phone = user.Phone;
             context.Users.Add(addUser);
-           return await context.SaveChangesAsync();
+            return await context.SaveChangesAsync();
         }
         public async Task<UserDTO> GetUser(long id)
         {
-            var user= await context.Users.FindAsync(id);
+            var user = await context.Users.FindAsync(id);
             UserDTO userDTO = new UserDTO();
             userDTO.Id = user.Id;
             userDTO.Name = user.Name;
-            userDTO.Phone= user.Phone;
+            userDTO.Phone = user.Phone;
             return userDTO;
         }
-        public async Task<int> UpdateUser(long id,UserDTO user)
+        public async Task<int> UpdateUser(long id, UserDTO user)
         {
-            User updateUser=new User();
+            User updateUser = new User();
             updateUser.Id = user.Id;
-            updateUser.Name=user.Name;
-            updateUser.Phone= user.Phone;
+            updateUser.Name = user.Name;
+            updateUser.Phone = user.Phone;
             context.Entry(updateUser).State = EntityState.Modified;
 
             try
